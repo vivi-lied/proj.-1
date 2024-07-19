@@ -1,0 +1,165 @@
+def menu_principal():
+  print('------------MENU-PRINCIPAL-------------')
+  print('---------------------------------------')
+  print('1 - Cadastrar Livro')
+  print('2 - Consultar Livro(s)')
+  print('3 - Remover Livro')
+  print('4 - Sair')
+  print('---------------------------------------')
+
+def cadastrar_livro(id):
+    print('------------MENU-DE-CADASTRO-----------')
+    print('---------------------------------------')
+    titulo = (input('Entre aqui com o titulo do livro: '))
+    autor = (input('Entre aqui com o(a) autor(a) do livro: '))
+    editora  = (input('Entre aqui com a editora do livro: '))
+    print('---------------------------------------')
+
+    livro = {}
+    livro['id'] = id
+    livro['titulo'] = titulo
+    livro['autor'] = autor
+    livro['editora'] = editora
+    print(livro)
+    lista_livro.append(livro)
+    global id_global
+    id += 1
+    print('--------------------------------------------------------')
+    again = input('voce gostariacadastrar outro livro (s/n): ').lower()
+    print('--------------------------------------------------------')
+
+    if again == 'n':
+          print(menu_principal())
+          opcao()
+    elif again == 's':
+          cadastrar_livro(id)
+
+    else:
+          print('opção indisponivel tente novamente')
+
+def menu_consulta():
+  print('------------MENU-DE-CONSULTA-----------')
+  print('---------------------------------------')
+  print('1 - Consultar Todos os Livro(s)')
+  print('2 - Consultar Livro por Id')
+  print('3 - Consultar Livro(s) por Autor')
+  print('4 - Sair')
+  print('---------------------------------------')
+
+def consultar_tudo():
+  print(lista_livro)
+  print('--------------------------------------------------------')
+  again = input('voce gostaria de voltar para o menu de consulta mais uma vez (s/n): ').lower()
+  print('--------------------------------------------------------')
+
+  if again == 'n':
+        print(menu_principal())
+        opcao()
+  elif again == 's':
+        menu_consulta()
+
+  else:
+        print('opção indisponivel tente novamente')
+
+def consultar_id():
+    id = int(input('ensira aqui com o id do seu livro desejado: '))
+    for livro in lista_livro:
+      if livro['id'] == id:
+        print(f'Titulo: {livro["titulo"]}')
+        print(f'Autor: {livro["autor"]}')
+        print(f'Editora: {livro["editora"]}')
+        print('---------------------------------------------------------')
+      again = input('voce gostaria de consultar mais um livro (s/n): ').lower()
+      print('--------------------------------------------------------')
+
+      if again == 'n':
+        print(menu_principal())
+        opcao()
+      elif again == 's':
+        menu_consulta()
+
+      else:
+        print('opção indisponivel tente novamente')
+
+def consultar_autor():
+  autor = input('Entre aqui com o nome do autor: ')
+  achou = False
+  for livro in lista_livro:
+      if livro['autor'] == autor:
+        print(livro)
+        achou = True
+        print('--------------------------------------------------------')
+  if not achou:
+      print('autor não encontrado')
+  again = input('voce gostaria de voltar para o menu de consulta mais uma vez (s/n): ').lower()
+  print('--------------------------------------------------------')
+
+  if again == 'n':
+      print(menu_principal())
+      opcao()
+  elif again == 's':
+      menu_consulta()
+  else:
+      print('opção indisponivel tente novamente')
+
+def menu_remove():
+  while True:
+    print('------------MENU-DE-REMOÇÃO-----------')
+    print('---------------------------------------')
+    id = int(input('ensira aqui o id do livro que você deseja removar da sua lista: '))
+    for livro in lista_livro:
+      if livro['id'] == id:
+        print('removido')
+        lista_livro.remove(livro)
+        return
+    print('id invalido')
+    again = input('voce gostaria de cadastrar mais um livro (s/n): ').lower()
+    print('--------------------------------------------------------')
+    if again == 'n':
+        print(menu_principal())
+        opcao()
+    elif again == 's':
+        menu_consulta()
+    else:
+        print('opção indisponivel tente novamente')
+
+def opcao():
+    global op, id_global
+    id = id_global
+    op = int(input('Escolha uma opção: '))
+    if op == 1:
+      cadastrar_livro(id)
+      id_global += 1
+    elif op == 2:
+      menu_consulta()
+      escolha()
+    elif op == 3:
+      menu_remove()
+    elif op == 4:
+      print('Programa encerrado')
+    servico = False
+
+def escolha():
+  global ask
+  ask = int(input("Entre aqui com o que mais lhe adere: "))
+  if ask == 1:
+        consultar_tudo()
+  elif ask == 2:
+        consultar_id()
+  elif ask == 3:
+        consultar_autor()
+  elif ask == 4:
+        menu_principal()
+  else:
+        print('opção indisponivel tente novamente')
+
+servico = True
+lista_livro = []
+id_global = 1
+while servico:
+  menu_principal()
+  opcao()
+
+
+
+
